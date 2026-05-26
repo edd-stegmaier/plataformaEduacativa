@@ -21,6 +21,12 @@ public class CursoController {
         this.cursoService = cursoService;
     }
 
+    //Test endpoint
+    @GetMapping("/test")
+    public ResponseEntity<String> testEndpoint() {
+        return ResponseEntity.ok("El endpoint de cursos está funcionando correctamente.");
+    }
+
     // obtiene lista de cursos
     @GetMapping
     public ResponseEntity<List<CursoResponseDTO>> listarCursos() {
