@@ -18,4 +18,6 @@ public class InscripcionResponseDTO {
 	private Long estudianteId;
 
 	private Date fechaInscripcion;
+
+	private String S3key;
 }

@@ -13,18 +13,24 @@ import com.duoc.LearningPlatformValidation.repository.CursoRepository;
 import com.duoc.LearningPlatformValidation.repository.InscripcionRepository;
 import com.duoc.LearningPlatformValidation.repository.UsuarioRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class InscripcionService {
+
+	private final InscripcionFileService inscripcionFile;
 
 	private final InscripcionRepository inscripcionRepository;
 	private final CursoRepository cursoRepository;
 	private final UsuarioRepository usuarioRepository;
 
 	public InscripcionService(InscripcionRepository inscripcionRepository, CursoRepository cursoRepository,
-			UsuarioRepository usuarioRepository) {
+			UsuarioRepository usuarioRepository, InscripcionFileService inscriptionFile ) {
 		this.inscripcionRepository = inscripcionRepository;
 		this.cursoRepository = cursoRepository;
 		this.usuarioRepository = usuarioRepository;
+		this.inscripcionFile = inscriptionFile;
 	}
 
 	public List<InscripcionResponseDTO> listarInscripcionesPorCurso(Long cursoId) {
@@ -33,7 +39,17 @@ public class InscripcionService {
 
 	public InscripcionResponseDTO crearInscripcion(InscripcionRequestDTO inscripcionRequestDTO) {
 		InscripcionEntity inscripcion = toEntity(inscripcionRequestDTO);
-		return toDTO(inscripcionRepository.save(inscripcion));
+		InscripcionEntity nuevaInscripcion = inscripcionRepository.save(inscripcion);
+		InscripcionResponseDTO respuesta =  toDTO(nuevaInscripcion);
+		try {
+			String key = inscripcionFile.subirResumen(nuevaInscripcion);
+			respuesta.setS3key(key);
+
+		} catch (Exception e) {
+			log.info("Error al subir resumen de inscipcion " + respuesta.getId() + ": " + e.getMessage());
+		}
+
+		return respuesta;
 	}
 
 	public boolean eliminarInscripcion(Long id) {
@@ -44,12 +60,17 @@ public class InscripcionService {
 		return false;
 	}
 
+
+
+
+	// to Entity / DTO
 	private InscripcionResponseDTO toDTO(InscripcionEntity inscripcion) {
 		return new InscripcionResponseDTO(
 			inscripcion.getId(),
 			inscripcion.getCurso() != null ? inscripcion.getCurso().getId() : null,
 			inscripcion.getEstudiante() != null ? inscripcion.getEstudiante().getId() : null,
-			inscripcion.getFechaInscripcion()
+			inscripcion.getFechaInscripcion(),
+			null
 		);
 	}
 
