@@ -1,7 +1,5 @@
 package com.duoc.plataformaEducativa.service;
 
-import io.awspring.cloud.s3.S3Exception;
-
 import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;

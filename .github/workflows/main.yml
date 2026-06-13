@@ -59,14 +59,7 @@ jobs:
             # Descargar la última versión de la imagen
             docker pull ${{ secrets.DOCKERHUB_USERNAME }}/my-app:latest
             # Parar y eliminar cualquier contenedor previo
-            if [ "$(docker ps -aq -f name=^/my-app$)" ]; then
-              echo "Found existing container 'my-app' — stopping and removing it..."
-              docker stop my-app || true
-              docker rm my-app || true
-              echo "Existing container 'my-app' stopped and removed."
-            else
-              echo "No previous version of 'my-app' found; nothing to stop/remove."
-            fi
+            docker rm -f my-app 2>/dev/null || true
             # Iniciar el contenedor
             docker run -d --name my-app -p 8080:8080 \
               -e DB_USERNAME='${{ secrets.DB_USERNAME }}' \

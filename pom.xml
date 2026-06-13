@@ -28,6 +28,7 @@
 	</scm>
 	<properties>
 		<java.version>21</java.version>
+		<aws.sdk.version>2.46.5</aws.sdk.version>
 		<oracle.security.version>21.21.0.0</oracle.security.version>
 	</properties>
 	<dependencies>
@@ -106,17 +107,17 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-			<groupId>io.awspring.cloud</groupId>
-			<artifactId>spring-cloud-aws-starter-s3</artifactId>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>s3</artifactId>
 		</dependency>
 	</dependencies>
 
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>io.awspring.cloud</groupId>
-				<artifactId>spring-cloud-aws-dependencies</artifactId>
-				<version>3.3.1</version>
+				<groupId>software.amazon.awssdk</groupId>
+				<artifactId>bom</artifactId>
+				<version>${aws.sdk.version}</version>
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
