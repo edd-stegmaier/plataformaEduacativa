@@ -19,14 +19,14 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class InscripcionService {
 
-	private final InscripcionFileService inscripcionFile;
+	private final FileService inscripcionFile;
 
 	private final InscripcionRepository inscripcionRepository;
 	private final CursoRepository cursoRepository;
 	private final UsuarioRepository usuarioRepository;
 
 	public InscripcionService(InscripcionRepository inscripcionRepository, CursoRepository cursoRepository,
-			UsuarioRepository usuarioRepository, InscripcionFileService inscriptionFile ) {
+			UsuarioRepository usuarioRepository, FileService inscriptionFile ) {
 		this.inscripcionRepository = inscripcionRepository;
 		this.cursoRepository = cursoRepository;
 		this.usuarioRepository = usuarioRepository;

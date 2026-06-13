@@ -17,7 +17,7 @@ ENV DB_WALLET_PATH=/opt/oracle/wallet
 
 RUN mkdir -p /opt/oracle/wallet
 
-COPY --from=buildstage /app/target/plataformaEducativa-1.0.0.jar /app/app.jar
+COPY --from=buildstage /app/target/plataformaEducativa-1.2.0.jar /app/app.jar
 
 EXPOSE 8080
 

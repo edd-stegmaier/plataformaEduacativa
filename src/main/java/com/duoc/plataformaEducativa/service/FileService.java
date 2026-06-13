@@ -7,12 +7,12 @@ import org.springframework.stereotype.Service;
 import com.duoc.plataformaEducativa.model.InscripcionEntity;
 
 @Service
-public class InscripcionFileService {
+public class FileService {
 
     private final S3Service s3Service;
     private final String bucket = "bucket-desarrollo-cloud";
 
-    public InscripcionFileService(S3Service s3Service) {
+    public FileService(S3Service s3Service) {
         this.s3Service = s3Service;
     }
 
