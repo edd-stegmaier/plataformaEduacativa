@@ -33,9 +33,6 @@ build/
 .vscode/
 
 *.pem
-*.txt
-*.md
-docs/
-oracle/
-aws/
+*.dev.txt
+*.dev.md
 scripts/

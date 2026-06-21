@@ -60,6 +60,17 @@ public class InscripcionService {
 		return false;
 	}
 
+	public byte[] generarResumenInscripcion(Long id) {
+		byte[] archivo = null;
+		InscripcionEntity inscripcion = inscripcionRepository.findById(id).orElse(null);
+		try {
+			archivo = inscripcionFile.generarResumenIncripcion(inscripcion);
+		} catch (Exception e) {
+			log.info("Error al generar resumen de inscipcion " + inscripcion.getId() + ": " + e.getMessage());
+		}
+		return archivo;
+	}
+
 
 
 
