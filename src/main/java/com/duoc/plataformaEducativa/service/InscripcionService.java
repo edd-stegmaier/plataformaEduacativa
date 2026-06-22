@@ -19,7 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class InscripcionService {
 
-	private final FileService inscripcionFile;
+	private final FileService FileService;
 
 	private final InscripcionRepository inscripcionRepository;
 	private final CursoRepository cursoRepository;
@@ -30,9 +30,13 @@ public class InscripcionService {
 		this.inscripcionRepository = inscripcionRepository;
 		this.cursoRepository = cursoRepository;
 		this.usuarioRepository = usuarioRepository;
-		this.inscripcionFile = inscriptionFile;
+		this.FileService = inscriptionFile;
 	}
 
+	public List<InscripcionResponseDTO> listarInscripciones(){
+		return inscripcionRepository.findAll().stream().map(this::toDTO).toList();
+	}
+	
 	public List<InscripcionResponseDTO> listarInscripcionesPorCurso(Long cursoId) {
 		return inscripcionRepository.findByCurso_Id(cursoId).stream().map(this::toDTO).toList();
 	}
@@ -42,7 +46,7 @@ public class InscripcionService {
 		InscripcionEntity nuevaInscripcion = inscripcionRepository.save(inscripcion);
 		InscripcionResponseDTO respuesta =  toDTO(nuevaInscripcion);
 		try {
-			String key = inscripcionFile.subirResumen(nuevaInscripcion);
+			String key = FileService.subirResumen(nuevaInscripcion);
 			respuesta.setS3key(key);
 
 		} catch (Exception e) {
@@ -64,7 +68,7 @@ public class InscripcionService {
 		byte[] archivo = null;
 		InscripcionEntity inscripcion = inscripcionRepository.findById(id).orElse(null);
 		try {
-			archivo = inscripcionFile.generarResumenIncripcion(inscripcion);
+			archivo = FileService.generarResumenIncripcion(inscripcion);
 		} catch (Exception e) {
 			log.info("Error al generar resumen de inscipcion " + inscripcion.getId() + ": " + e.getMessage());
 		}
