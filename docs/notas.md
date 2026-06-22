@@ -1,10 +1,6 @@
 
 
 
-
-
-
-
 - ### arreglo error main.yml linea 62 **No such container: my-app**
 
 -  version anterior muestra error si no habia version previa de my-app: 
